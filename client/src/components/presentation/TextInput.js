@@ -1,6 +1,6 @@
-import React from 'react';
-import classnames from 'classnames';
-import PropTypes from 'prop-types';
+import React from './node_modules/react';
+import classnames from './node_modules/classnames';
+import PropTypes from './node_modules/prop-types';
 
 const TextInput = ({
   name, 

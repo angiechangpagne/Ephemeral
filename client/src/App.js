@@ -23,6 +23,7 @@ function App() {
       <Header/>
       <Switch>
           <Route exact path='/' render={()=> <Redirect to='/new/1'/>} component={CreateLink}/>
+          
       </Switch>
       </BrowserRouter>
     </div>

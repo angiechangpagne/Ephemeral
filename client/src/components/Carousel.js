@@ -12,7 +12,7 @@ const Carousal=(props) =>{
     //img list image passed from parent
     const {imgList=[],img_width=IMG_WIDTH,img_height=IMG_HEIGHT,visibleImages=VISIBLE_IMAGES,duration=DURATION,autoNext=false,timeForNext=3000}=props
     //currentFrstImg middle primary element
-    const [currFirstImg,setCurrFirstImg]=useState(0)
+    const [currFirstImg,setCurrFirstImg]=useState(0) //result is a tuple(fixed size array) ==> the inputs are a value and callback
     const [actualFirst,setActualFirst]=useState('')
     const [visibleItemProps,setVisibleItemsProps]=useState({order:[],styles:{}})
     const currMiddleImgRef=useRef(0)
@@ -54,6 +54,13 @@ useEffect(()=>{
         },timeForNext)
     }
 },[])
+
+//this type of use effect allows auto rotation after a time period
+useEffect(() => {
+    const next=(current+1)%slides.length
+    const id= setTimeout(() => setCurrent(next),t)
+    return () => clearTimeout(id)
+},[current])
 
 
 
