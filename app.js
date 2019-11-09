@@ -8,7 +8,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const apiRouter = require('./routes/api');
 const app = express();
-const PORT = 3000;
+const PORT = 5000;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
