@@ -52,7 +52,7 @@
   grid-column-end: 1;
   grid-row-start: 2;
   grid-row-end: 2;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 #topic-list-header {
