@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // View Components
 import TextInput from '../presentation/TextInput';
@@ -9,6 +9,13 @@ function Dashboard() {
   // Declare state variables
   const [currentTopic, setTopic] = useState('');
   const [topics, addTopic] = useState([]);
+
+  // Lifecycle Actions
+  useEffect(getTopics);
+
+  function getTopics() {
+	console.log('getting topics');
+  }
 
   function updateTopic(e) {
 	const newTopic = e.target.value;
