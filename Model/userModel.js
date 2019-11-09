@@ -12,6 +12,8 @@ mongoose.connect(MONGO_URI, {
 
 const Schema = mongoose.Schema;
 
+// user schema --> holds topics (categories) & saved articles for individual users
+
 const userSchema = new Schema ({
   topics: [
     {
@@ -27,6 +29,15 @@ const userSchema = new Schema ({
 
 const User = mongoose.model('user', userSchema);
 
+// resources schema --> holds all the api keys for multiple sources
+
+const resourcesSchema = new Schema({
+  
+})
+
+const Resources = mongoose.model('resource', resourcesSchema);
+
 module.exports = {
   User,
+  Resources,
 }
