@@ -10,7 +10,7 @@ import React, {useState,useRef,useEffect} from 'react'
 //render API news articles from sources:
 //
 //
-const Item=(props) =>{
+const Article=(props) =>{
     const []=useState("")
     
 
@@ -22,9 +22,11 @@ const Item=(props) =>{
 
 
     return (
-        <div>
+        <div className="article">
+            <h2> {Article.headline}</h2>
+
         </div> 
     )
 }
 
-export default Item;
+export default Article

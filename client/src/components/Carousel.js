@@ -1,15 +1,18 @@
 import React, {useState, useEffect, useRef } from './node_modules/react'
 import './carousel.css'
 
+//an infinite carousel
 const IMG_WIDTH=300
 const IMG_HEIGHT=300
 const parentPad=0
 const VISIBLEIMAGES=3
 const DURATION=750
+import Header from '../components/Header'
 
 const Carousal=(props) =>{
     //these are the hooks
     //img list image passed from parent
+    //const imgList=fetch(query $ )
     const {imgList=[],img_width=IMG_WIDTH,img_height=IMG_HEIGHT,visibleImages=VISIBLE_IMAGES,duration=DURATION,autoNext=false,timeForNext=3000}=props
     //currentFrstImg middle primary element
     const [currFirstImg,setCurrFirstImg]=useState(0) //result is a tuple(fixed size array) ==> the inputs are a value and callback
@@ -25,6 +28,45 @@ const Carousal=(props) =>{
     const elementsInLeft=Math.ceil(visibleImages/2)
     const elementsInRight=visibleImages-elementsInLeft
     
+    //for swipeable
+    const handlers=useSwipeable({
+    onSwiping(e){
+        dispatch({
+            type: "drag",
+            offselt: -e.deltaX
+        })
+    },
+    onSwipedLeft(e){
+        const t=threshold(e.event.target)
+        if(e.deltaX >= t){
+            dispatch({
+                type: "next",
+                length
+            })
+        }else{
+            dispatch({
+                type: "drag",
+                offset: 0
+            })
+        }
+    },
+    onSwipedRight(e){
+        const t=threshold(e.event.target)
+        if(-e.deltaX >= t){
+            dispatch({
+                type: "prev",
+                length
+            })
+        } else {
+            dispatch({
+                type: "drag",
+                offset: 0
+            })
+        }
+    }, trackMouse: true,
+       trackTouch: true
+})
+     
 
 useEffect(() =>{
     clearInterval(intervalRef.current)
@@ -62,17 +104,16 @@ useEffect(() => {
     return () => clearTimeout(id)
 },[current])
 
-
-
-    const loadCarousel=()=>{
+// useReducer()
+    const loadCarousel= () => {
         return (
-            <ul className="carousalWrapper" style={{height: parentHeight+'px',width:parentWidth+'px',padding:parentPad+'px',perspective:'500px'}}>
+            <ul className="carouselWrapper" style={{ height: parentHeight+'px', width:parentWidth+'px',padding: parentPad+'px',perspective:'500px'}}>
                 {
-                    imgList.map(({large_url,url,id},index) =>{
+                    imgList.map(({large_url,url,id},index) => {
                         const dn=visibleItemsProps.order.indexOf(index)===-1
                         const styles=visibleItemsProps[index] ? visibleItemsProps[index].styles: {}
                         return (
-                            <li key={id} className={'imgWrap '+(dn ? 'dn':'')} style={{...styles,position:'absolute',transition: `all ${durationRef.current}ms linear`}} onClick={(e) =>{changeCenter({e,index,large_url})} }>
+                            <li key={id} className={'imgWrap '+(dn ? 'dn':'')} style={{...styles, position:'absolute',transition: `all ${durationRef.current}ms linear`}} onClick={(e) =>{changeCenter({e,index,large_url})} }>
                                 <img src={url} alt={'img_'+id} width={img_width} height={img_height}/>
                             </li>
                         )
@@ -111,7 +152,7 @@ useEffect(() => {
                 setCurrFirstImg(currMiddleImgRef.current)
             }
         }
-
+   
 
 const constructVisibleItemsProps=() =>{
     const visibleItemsProps={    }
@@ -163,10 +204,7 @@ const constructVisibleItemsProps=() =>{
     setVisibleItemsProps(visibleItemsProps); // setting state for visible items
     }
 
-
 }
-
-
 
 
         return (

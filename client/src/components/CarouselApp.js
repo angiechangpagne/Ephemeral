@@ -1,6 +1,12 @@
 import React, { CompositionEvent, useState, useEffect } from './node_modules/react'
+import {Route} from 'react-router-dom'
+import Header from '../components/Header'
+import axios from 'axios'
 
 
+const App = (props) => {
+    const [imgList,setImgList]=setList([])
+}
 const CarouselApp=() => {
     const [news,setNews] =useState([])
     const [searchQuery,setSearchQuery] =useState('react')
@@ -37,10 +43,22 @@ const CarouselApp=() => {
 
     }
 
+
+
     const showNews = () => {
         return news.map((element,index) => (<p key={index}>{element.title}</p>))
     }
 
+
+
+    useEffect(() => {
+        axios.get(URL
+            .then((resp) => {
+                setImgList(resp.data.images)
+            }).catch((err) => {
+                console.group(err)
+            }))
+    })
     //lifecycle hok
     useEffect(() => {
         fetchNews()
@@ -49,8 +67,10 @@ const CarouselApp=() => {
     return (
         <div>
             <h2> News</h2>
-            {showLoading()}
-            {searchForm()}
+                {/* //for loopo images */}
+            {/* <Route path={`/viewArticles`} component={Carousel}/>
+            <Route path={  `/viewArticle/:id`} component={} */}
+            {showLoading()} 
             {showNews()}
         </div>
     )
