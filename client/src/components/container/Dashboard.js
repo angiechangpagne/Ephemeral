@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
 // View Components
 import TextInput from '../presentation/TextInput';
@@ -8,6 +8,26 @@ function Dashboard() {
   // Declare state variables
   const [currentTopic, setTopic] = useState('');
   const [topics, addTopic] = useState([]);
+  const [url,setUrl]=useState('')
+  const [loading,setLoading]=useState(false)
+
+
+  const fetchNews=()=>{
+	  setLoading(true)
+	  fetch(url)
+	  .then(result=> result.json())
+	  .then(data=> (setNews(dat.hits),setLoading(false)))
+	  .catch(error=> console.log(error))
+  }
+
+  const handleChange=(event) =>{
+	setSearchQuery(event.target.value)
+  }
+
+  const handleSubmit=event=>{
+	 event.preventDefault()
+	 setUrl(``) //url must have a $query to the api, it will be a search query
+  }
 
   function updateTopic(e) {
 	const newTopic = e.target.value;
@@ -19,6 +39,9 @@ function Dashboard() {
 	console.log(currentTopic);
   }
 
+  const showLoading=()=>{ { return loading ? <h2> Loading...</h2>: '' }}
+
+ 
   return (
 	<div id='dashboard-container'>
 	  <div className='dashboard-header'>

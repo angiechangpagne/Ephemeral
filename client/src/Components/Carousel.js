@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useRef } from 'react'
-import './carousal.css'
+import React, {useState, useEffect, useRef } from './node_modules/react'
+import './carousel.css'
 
 const IMG_WIDTH=300
 const IMG_HEIGHT=300
