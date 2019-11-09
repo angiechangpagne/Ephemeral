@@ -3,6 +3,7 @@ const User = require('../Model/userModel');
 
 const userController = {};
 
+
 userController.createUser = (req, res, next) => {
     const { userid } = req.body;
     if(!userid) {
@@ -18,10 +19,17 @@ userController.createUser = (req, res, next) => {
     }) 
 }
 
+
+// save to DB after login
+
 userController.saveTopics = (req, res, next) => {
-    const data = ['politics', 'technology', 'sports', 'education']
+    //
     res.locals.topics = data;
     return next()
+}
+// retrieve saved topics when logged in
+userController.getSavedTopics = (req, res, next) => {
+
 }
 
 module.exports = userController;
