@@ -6,10 +6,11 @@ const newsController = {}
 // fetch articles
 
 newsController.fetchNews = (req, res, next) => {
-    fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?&api-key=` + process.env.API_KEY)
+    const topic = 'arts';
+    fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${topic}&api-key=` + process.env.API_KEY)
         .then(data => data.json())
         .then(result => {
-            // console.log(`RESULT FROM CONTROLLER: `, res);
+            //console.log(`RESULT FROM CONTROLLER: `, result);
             res.locals.data = result.response.docs; // array of objects, one for each article
             return next();
         }) // store into res.locals
