@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 // CSS Styles
@@ -15,14 +15,10 @@ import { AuthProvider } from './components/presentation/Auth';
 function App() {
 
   /*** State Variables ***/
-  const [isLoggedIn, setLogIn] = useState(false);
 
   /*** Lifecycle Actions ***/
 
   /*** Helper Functions ***/
-  function signup() {
-	setLogIn(true);
-  }
 
   return (
 	<AuthProvider>
