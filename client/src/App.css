@@ -74,6 +74,17 @@
   cursor: pointer;
 }
 
+.signout {
+  height: 50%;
+  width: 50%;
+  margin: auto;
+}
+
+.auth-modal{
+  height: 300px;
+  width: 300px;
+}
+
 /*** DASHBOARD END ***/
 
 /*** AUTH START ***/

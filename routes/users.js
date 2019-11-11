@@ -8,11 +8,11 @@ router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
 
-router.post('/topics/:id', userController.createUser, userController.saveTopics, (req, res, next) => {
-  res.status(200).json({
-    topics: [...res.locals.topics]
-  })
-})
+// router.post('/topics/:id', userController.createUser, userController.saveTopics, (req, res, next) => {
+//   res.status(200).json({
+//     topics: [...res.locals.topics]
+//   })
+// })
 
 router.get('/topics/:id', (req, res, next) => {
   const { id } = req.params;

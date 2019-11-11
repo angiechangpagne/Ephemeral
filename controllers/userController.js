@@ -1,6 +1,6 @@
 // require db later
 const User = require('../Model/userModel');
-
+const fetch = require('node-fetch')
 const userController = {};
 
 
@@ -22,7 +22,7 @@ userController.createUser = (req, res, next) => {
 
 // save to DB after login
 
-userController.saveTopics = (req, res, next) => {
+userController.getSavedTopics = (req, res, next) => {
     // 
     const { id } = req.params // maybe from params?
     User.findById(id)
@@ -33,19 +33,13 @@ userController.saveTopics = (req, res, next) => {
                     return next(err);
                 }
             })
+            res.locals.savedTopics = doc.topics;
+            return next();
         })
         .catch(err => {
             return next(err);
         })
-
-
-    res.locals.topics = data;
     return next()
-}
-
-// retrieve saved topics when logged in
-userController.getSavedTopics = (req, res, next) => {
-
 }
 
 module.exports = userController;
