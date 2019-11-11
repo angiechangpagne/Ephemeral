@@ -47,47 +47,44 @@ function Dashboard(props) {
 	  .catch(err => console.log('Error saving topic: ', err));
   }
 
+  const newsArr = [
+	{ articleUrl: '',
+	  title: 'Fake News',
+	  abstract: 'First Slide',
+	  imgUrl: 'https://picsum.photos/800/400'
+	},
+	{ articleUrl: '',
+	  title: 'Florida man strikes back',
+	  abstract: 'Second Slide',
+	  imgUrl: 'https://media2.fdncms.com/orlando/imager/u/blog/26153482/asa.5da8af649db7b.jpg?cb=1571337540'
+	},
+	{ articleUrl: '',
+	  title: 'Old man yells at cloud',
+	  abstract: 'Third Slide',
+	  imgUrl: 'https://i0.kym-cdn.com/entries/icons/facebook/000/019/304/old.jpg'
+	}
+  ]
+
+  const newsreel = newsArr.map( (article, i) => (
+	<Carousel.Item key={i}>
+	  <img
+		className='d-block w-100 carousel-img'
+		src={article.imgUrl}
+		alt={article.alt}
+	  />
+	  <Carousel.Caption>
+		<h3 className='caption-title'>{article.title}</h3>
+		<p className='caption-abstract'>{article.abstract}</p>
+	  </Carousel.Caption>
+	</Carousel.Item>
+  ));
 
   return (
 	<div id='dashboard-container'>
 
 	  <div className='dashboard-header'>
 		<Carousel>
-		  <Carousel.Item>
-			<img
-			  className="d-block w-100"
-			  src="https://picsum.photos/800/400"
-			  alt="First slide"
-			/>
-			<Carousel.Caption>
-			  <h3>First slide label</h3>
-			  <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-			</Carousel.Caption>
-		  </Carousel.Item>
-		  <Carousel.Item>
-			<img
-			  className="d-block w-100"
-			  src="http://placehold.jp/800x400.png"
-			  alt="Third slide"
-			/>
-
-			<Carousel.Caption>
-			  <h3>Second slide label</h3>
-			  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-			</Carousel.Caption>
-		  </Carousel.Item>
-		  <Carousel.Item>
-			<img
-			  className="d-block w-100"
-			  src="https://picsum.photos/800/400"
-			  alt="Third slide"
-			/>
-
-			<Carousel.Caption>
-			  <h3>Third slide label</h3>
-			  <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-			</Carousel.Caption>
-		  </Carousel.Item>
+		  {newsreel}
 		</Carousel>
 	  </div>
 
