@@ -44,8 +44,8 @@ userController.saveTopics = (req, res, next) => {
 }
 
 // retrieve saved topics when logged in
-// userController.getSavedTopics = (req, res, next) => {
+userController.getSavedTopics = (req, res, next) => {
 
-// }
+}
 
 module.exports = userController;
