@@ -17,6 +17,7 @@ router.get('/topics', newsController.fetchNews, (req, res, next) => {
     })
 })
 
+
 router.get('/topics/:id', userController.getSavedTopics, (req, res, next) => {
     res.status(200).json({
         topics: ['js', 'codesmith']
