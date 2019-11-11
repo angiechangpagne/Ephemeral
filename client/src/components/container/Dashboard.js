@@ -6,7 +6,7 @@ import app from '../../base';
 import TextInput from '../presentation/TextInput';
 import TopicList from '../presentation/TopicList';
 
-function Dashboard() {
+function Dashboard(props) {
 
   /*** State Variables ***/
   const [currentTopic, setTopic] = useState('');
@@ -23,7 +23,7 @@ function Dashboard() {
   function getTopics() {
 	console.log('getting topics');
 	superagent
-	  .get('/api/test')
+	  .get(`/api/topics/${props.user.uid}`)
 	  .then(res => {
 		addTopic(res.body.topics);
 	  });
@@ -39,7 +39,13 @@ function Dashboard() {
 	e.preventDefault();
 	const topicList = [...topics, currentTopic];
 	addTopic(topicList);
+	superagent
+	  .post(`/api/topics/${props.user.uid}`)
+	  .send(currentTopic)
+	  .then(res => console.log(JSON.stringify(res.body)))
+	  .catch(err => console.log('Error saving topic: ', err));
   }
+
 
   return (
 	<div id='dashboard-container'>
