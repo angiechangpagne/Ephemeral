@@ -1,20 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import superagent from 'superagent';
 
 // View Components
 import TextInput from '../presentation/TextInput';
-import TopicList from './TopicList';
+import TopicList from '../presentation/TopicList';
 
 function Dashboard() {
 
-  // Declare state variables
+  /*** State Variables ***/
   const [currentTopic, setTopic] = useState('');
   const [topics, addTopic] = useState([]);
 
-  // Lifecycle Actions
-  useEffect(getTopics);
+  /*** Lifecycle Actions ***/
+    // componentDidMount //
+  useEffect(getTopics, []);
+    
+    // componentWillUpdate //
 
+
+  /*** Helper Functions ***/
   function getTopics() {
 	console.log('getting topics');
+	superagent
+	  .get('/api/test')
+	  .then(res => {
+		addTopic(res.body.topics);
+	  });
+
   }
 
   function updateTopic(e) {

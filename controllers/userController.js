@@ -6,17 +6,17 @@ const userController = {};
 
 userController.createUser = (req, res, next) => {
     const { id } = req.params;
-    if(!id) {
-        return next({err: 'no user in data base'}); // fix error later?
+    if (!id) {
+        return next({ err: 'no user in data base' }); // fix error later?
     }
     User.create({ userid })
-    .then(createdUser => {
-        res.locals.userid = createdUser._id;
-        return next();
-    })
-    .catch(err => {
-        return next(err);
-    }) 
+        .then(createdUser => {
+            res.locals.userid = createdUser._id;
+            return next();
+        })
+        .catch(err => {
+            return next(err);
+        })
 }
 
 
@@ -25,20 +25,20 @@ userController.createUser = (req, res, next) => {
 userController.saveTopics = (req, res, next) => {
     // 
     const { id } = req.params // maybe from params?
-    User.findById(id) 
-    .then((doc) => {
-        User.save((err, doc) => {
-            if(err) {
-                console.log(err);
-                return next(err);
-            }
+    User.findById(id)
+        .then((doc) => {
+            User.save((err, doc) => {
+                if (err) {
+                    console.log(err);
+                    return next(err);
+                }
+            })
         })
-    })
-    .catch (err => {
-        return next(err);
-    })
+        .catch(err => {
+            return next(err);
+        })
 
-    
+
     res.locals.topics = data;
     return next()
 }
