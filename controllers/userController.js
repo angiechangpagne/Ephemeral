@@ -12,6 +12,7 @@ userController.createUser = (req, res, next) => {
     let newUser = new User();
     newUser.save(function (err) {
         if (err) {
+            console.log('err here in createUser')
             return next(err);
         }
     })
@@ -21,6 +22,8 @@ userController.createUser = (req, res, next) => {
 userController.saveTopic = (req, res, next) => {
     const { topic } = req.body;
     const { id } = req.params;
+
+    console.log(`save topic here`)
     User.findOneAndUpdate({ _id: id }, { topics: [...topics, topic] });
 
 }
@@ -38,13 +41,18 @@ userController.getTopicsAndFetch = (req, res, next) => {
                     .then(result => {
                         const arr = [];
                         result.response.docs.forEach(obj => {
-                            arr.push([obj.web_url, obj.abstract])
+                            arr.push({
+                                articleUrl: obj.web_url,
+                                abstract: obj.abstract,
+                                imgUrl: obj.multimedia.url
+                            })
                         }); // array of objects, one for each article , push just url and abstract into arr
 
                         res.locals.articleArr = arr; // sent this back to front end in api.js
 
                     })
                     .catch(err => {
+                        console.log('err here in catch in GET/Fetch')
                         return next(err);
                     })
             })
