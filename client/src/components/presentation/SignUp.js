@@ -1,15 +1,21 @@
 import React, { useCallback } from 'react';
 import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
+import superagent from 'superagent';
 import app from '../../base';
 
-const SignUp = ({ history }) => {
+const SignUp = ({ history }, ...props) => {
   const handleSignUp = useCallback(async event => {
 	event.preventDefault();
 	const { email, password } = event.target.elements;
 	try {
 	  await app
 	    .auth()
-	    .createUserWithEmailAndPassword(email.value, password.value);
+		.createUserWithEmailAndPassword(email.value, password.value);
+	  superagent
+	  	.post(`http://localhost:5000/api/user/${props.user.uid}`)
+	    .then(res => console.log(res.body))
+	    .catch(err => console.log("Error saving user: ", err));
 	  history.push('/');
 	} catch (error) {
 	  alert(error);
@@ -30,8 +36,13 @@ const SignUp = ({ history }) => {
 			<input name='password' type='password' placeholder='Password' />
 		  </label>
 		  <br />
-		  <button className='auth-button' type='submit'>Sign Up</button>
+		  <button className='btn btn-info auth-button' type='submit'>Sign Up</button>
 		</form>
+		<Link to='/login'>
+		  <button className='btn btn-secondary auth-button'>
+			Login
+		  </button>
+		</Link>
 	  </div>
 	</div>
   )
