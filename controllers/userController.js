@@ -1,21 +1,29 @@
-const User = require('../Model/userModel');
+const models = require('../Model/userModel');
+// const mongoose = require('mongoose')
 require('dotenv').config();
 const userController = {};
+// console.log(User)
+
+const ObjectId = require('mongoose').Types.ObjectId;
 
 
 userController.createUser = (req, res, next) => {
     const { id } = req.params;
-    if (!id) {
-        return next({ err: 'no user in data base' }); // fix error later?
-    }
+    if (id) return next();
 
-    let newUser = new User();
-    newUser.save(function (err) {
-        if (err) {
-            console.log('err here in createUser')
-            return next(err);
+    let objId = new ObjectId(id);
+    models.User.create({ _id: objId },
+        function (err, doc) {
+            if (err) {
+                console.log(err)
+                return next(err)
+            } else {
+                console.log(doc)
+                console.log(`saved`)
+            }
+
         }
-    })
+    )
     return next();
 }
 // save topics to DB after login
@@ -23,15 +31,31 @@ userController.saveTopic = (req, res, next) => {
     const { topic } = req.body;
     const { id } = req.params;
 
-    console.log(`save topic here`)
-    User.findOneAndUpdate({ _id: id }, { topics: [...topics, topic] });
+    //console.log(`Inside saveTopics ||| id: `, id, ' topic: ', topic)
+
+    //const id = '5dc9de9f1c9d440000ee7598'; // for testing purposes
+    let objId = new ObjectId(id);
+    models.User.findOne({ _id: objId })
+        .then(doc => {
+            console.log(`DOC: `, doc)
+            doc.topics = [...topics, topic]
+            doc.save()
+            return next()
+        })
+        .catch(err => {
+            console.log(err)
+            return next(err)
+        })
+
+
+    return next();
 
 }
 
 userController.getTopicsAndFetch = (req, res, next) => {
     const { id } = req.params;
     // find user
-    User.findById(id)
+    models.User.findById(id)
         .then((doc) => {
             // loop over doc.topics
             // fetch for each topic
