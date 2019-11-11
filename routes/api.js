@@ -11,4 +11,6 @@ router.get('/topics', newsController.fetchNews, (req, res, next) => {
     })
 })
 
+
+
 module.exports = router;
