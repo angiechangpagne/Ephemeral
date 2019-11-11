@@ -5,6 +5,7 @@ import app from '../../base';
 // View Components
 import TextInput from '../presentation/TextInput';
 import TopicList from '../presentation/TopicList';
+import { Carousel } from 'react-bootstrap';
 
 function Dashboard(props) {
 
@@ -23,7 +24,7 @@ function Dashboard(props) {
   function getTopics() {
 	console.log('getting topics');
 	superagent
-	  .get(`/api/topics/${props.user.uid}`)
+	  .get(`http://localhost:5000/api/topics/${props.user.uid}`)
 	  .then(res => {
 		addTopic(res.body.topics);
 	  });
@@ -40,7 +41,7 @@ function Dashboard(props) {
 	const topicList = [...topics, currentTopic];
 	addTopic(topicList);
 	superagent
-	  .post(`/api/topics/${props.user.uid}`)
+	  .post(`http://localhost:5000/api/topics/${props.user.uid}`)
 	  .send(currentTopic)
 	  .then(res => console.log(JSON.stringify(res.body)))
 	  .catch(err => console.log('Error saving topic: ', err));
@@ -51,7 +52,43 @@ function Dashboard(props) {
 	<div id='dashboard-container'>
 
 	  <div className='dashboard-header'>
-		Ephemeral
+		<Carousel>
+		  <Carousel.Item>
+			<img
+			  className="d-block w-100"
+			  src="https://picsum.photos/800/400"
+			  alt="First slide"
+			/>
+			<Carousel.Caption>
+			  <h3>First slide label</h3>
+			  <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+			</Carousel.Caption>
+		  </Carousel.Item>
+		  <Carousel.Item>
+			<img
+			  className="d-block w-100"
+			  src="http://placehold.jp/800x400.png"
+			  alt="Third slide"
+			/>
+
+			<Carousel.Caption>
+			  <h3>Second slide label</h3>
+			  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+			</Carousel.Caption>
+		  </Carousel.Item>
+		  <Carousel.Item>
+			<img
+			  className="d-block w-100"
+			  src="https://picsum.photos/800/400"
+			  alt="Third slide"
+			/>
+
+			<Carousel.Caption>
+			  <h3>Third slide label</h3>
+			  <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+			</Carousel.Caption>
+		  </Carousel.Item>
+		</Carousel>
 	  </div>
 
 	  <div id='main-interface'>
