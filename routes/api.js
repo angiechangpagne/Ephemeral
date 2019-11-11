@@ -12,5 +12,16 @@ router.get('/topics', newsController.fetchNews, (req, res, next) => {
 })
 
 
+    res.status(200).json({
+        topics: [...res.locals.topics]
+    })
+})
+
+router.get('/topics/:id', userController.getSavedTopics, (req, res, next) => {
+    res.status(200).json({
+        topics: ['js', 'codesmith']
+    })
+})
+
 
 module.exports = router;
