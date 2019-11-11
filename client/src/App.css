@@ -95,3 +95,14 @@
   align-items: center;
   justify-content: center;
 }
+
+/*** CAROUSEL START ***/
+.carousel-img {
+  max-height: 70vh;
+}
+
+.caption-title {
+}
+
+
+/*** CAROUSE END ***/
