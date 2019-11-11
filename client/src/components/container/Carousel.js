@@ -157,7 +157,7 @@ const constructVisibleItemsProps=() =>{
     }
 
 
-}
+
 
 
 
@@ -168,5 +168,5 @@ const constructVisibleItemsProps=() =>{
             </React.Fragment>
         )
 
-}
+        }
 export default Carousel
