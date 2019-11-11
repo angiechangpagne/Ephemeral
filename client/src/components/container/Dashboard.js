@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import superagent from 'superagent';
+import app from '../../base';
 
 // View Components
 import TextInput from '../presentation/TextInput';
@@ -55,6 +56,8 @@ function Dashboard() {
 		</div>
 
 		<TopicList topics={topics} />
+
+		<button className='btn btn-danger signout' onClick={() => app.auth().signOut()}>Sign Out</button>
 	  </div>
 
 	</div>

@@ -12,8 +12,6 @@ const apiRouter = require('./routes/api');
 const authRouter = require('./routes/auth')
 const app = express();
 const PORT = 5000;
-const admin = require('firebase-admin');
-const serviceAccount = require(path.join(__dirname, 'serviceAccountKey.json'))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,15 +26,7 @@ app.use(express.static(path.join(__dirname, 'client')));
 app.use('/api', apiRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
-// serve Firebase config
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://ephemeral-744b7.firebaseio.com"
-})
-app.get('/secret', (req, res, next) => {
-  res.status(200).json(process.env.firebaseConfig)
-});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
