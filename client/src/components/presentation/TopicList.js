@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function TopicList(props) {
 
   const topics = props.topics.map( (topic, i) => (
-	<div className='topic'>{topic}</div>
+	<div key={i} className='topic'>{topic}</div>
   ));
 
   return (

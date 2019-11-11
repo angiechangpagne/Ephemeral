@@ -15,7 +15,7 @@ router.post('/topics/:id', userController.createUser, userController.saveTopics,
 })
 
 router.get('/topics/:id', (req, res, next) => {
-  const { id } = req.params.id;
+  const { id } = req.params;
   User.findById(id)
     .then(userDoc => {
       if (!userDoc) return res.render('/signup');
@@ -24,7 +24,19 @@ router.get('/topics/:id', (req, res, next) => {
     })
     .catch(err => next(err))
 })
-
+// delete topic
+router.delete('/topics/:id', (req, res, next) => {
+  const { id } = req.params;
+  User.findById(id)
+    .then(doc => {
+      //let update = { topics: req.body.topics }
+      //let doc = await User.findOneAndUpdate({ _id: id }, update);
+      User.save((err, doc) => {
+        if (err) return next(err)
+      })
+    })
+    .catch(err => next(err))
+})
 
 
 module.exports = router;

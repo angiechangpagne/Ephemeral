@@ -5,11 +5,14 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
+    "firebase": "^7.3.0",
+    "firebaseui": "^4.2.0",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.11.0",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "superagent": "^5.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -31,5 +34,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "proxy": "http://localhost:5000",
+  "devDependencies": {
+    "dotenv": "^8.2.0"
   }
 }

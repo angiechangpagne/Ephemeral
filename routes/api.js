@@ -11,8 +11,6 @@ router.get('/topics', newsController.fetchNews, (req, res, next) => {
     })
 })
 
-router.post('/topics/:id', userController.saveTopics, (req, res, next) => {
-    console.log(`========INSIDE ROUTER.POST()=========`)
 
     res.status(200).json({
         topics: [...res.locals.topics]
@@ -25,10 +23,5 @@ router.get('/topics/:id', userController.getSavedTopics, (req, res, next) => {
     })
 })
 
-
-
-// save
-// update
-// delete routes
 
 module.exports = router;
