@@ -9,7 +9,7 @@ require('dotenv').config()
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const apiRouter = require('./routes/api');
-const authRouter = require('./routes/auth')
+//const authRouter = require('./routes/auth')
 const app = express();
 const PORT = 5000;
 
@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'client')));
 
 app.use('/api', apiRouter);
 app.use('/users', usersRouter);
-app.use('/auth', authRouter);
+//app.use('/auth', authRouter);
 
 
 // catch 404 and forward to error handler

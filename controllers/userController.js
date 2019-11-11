@@ -1,6 +1,5 @@
-// require db later
 const User = require('../Model/userModel');
-const fetch = require('node-fetch')
+require('dotenv').config();
 const userController = {};
 
 
@@ -9,37 +8,52 @@ userController.createUser = (req, res, next) => {
     if (!id) {
         return next({ err: 'no user in data base' }); // fix error later?
     }
-    User.create({ userid })
-        .then(createdUser => {
-            res.locals.userid = createdUser._id;
-            return next();
-        })
-        .catch(err => {
+
+    let newUser = new User();
+    newUser.save(function (err) {
+        if (err) {
             return next(err);
-        })
+        }
+    })
+    return next();
+}
+// save topics to DB after login
+userController.saveTopic = (req, res, next) => {
+    const { topic } = req.body;
+    const { id } = req.params;
+    User.findOneAndUpdate({ _id: id }, { topics: [...topics, topic] });
+
 }
 
-
-// save to DB after login
-
-userController.getSavedTopics = (req, res, next) => {
-    // 
-    const { id } = req.params // maybe from params?
+userController.getTopicsAndFetch = (req, res, next) => {
+    const { id } = req.params;
+    // find user
     User.findById(id)
         .then((doc) => {
-            User.save((err, doc) => {
-                if (err) {
-                    console.log(err);
-                    return next(err);
-                }
+            // loop over doc.topics
+            // fetch for each topic
+            doc.topics.forEach(topic => {
+                fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${topic}&api-key=` + process.env.API_KEY)
+                    .then(data => data.json())
+                    .then(result => {
+                        const arr = [];
+                        result.response.docs.forEach(obj => {
+                            arr.push([obj.web_url, obj.abstract])
+                        }); // array of objects, one for each article , push just url and abstract into arr
+
+                        res.locals.articleArr = arr; // sent this back to front end in api.js
+
+                    })
+                    .catch(err => {
+                        return next(err);
+                    })
             })
-            res.locals.savedTopics = doc.topics;
+
             return next();
         })
         .catch(err => {
             return next(err);
         })
-    return next()
 }
 
 module.exports = userController;
