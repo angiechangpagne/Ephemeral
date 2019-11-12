@@ -1,10 +1,10 @@
 const models = require('../Model/userModel');
-// const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 require('dotenv').config();
 const userController = {};
 // console.log(User)
 
-const ObjectId = require('mongoose').Types.ObjectId;
+const ObjectId = mongoose.Types.ObjectId;
 
 
 userController.createUser = (req, res, next) => {
@@ -35,15 +35,16 @@ userController.saveTopic = (req, res, next) => {
 
     //const id = '5dc9de9f1c9d440000ee7598'; // for testing purposes
     let objId = new ObjectId(id);
+    console.log(`objId: `, objId)
     models.User.findOne({ _id: objId })
         .then(doc => {
-            console.log(`DOC: `, doc)
+            // console.log(`DOC: `, doc)
             doc.topics = [...topics, topic]
             doc.save()
             return next()
         })
         .catch(err => {
-            console.log(err)
+            //console.log(err)
             return next(err)
         })
 
