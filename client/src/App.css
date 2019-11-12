@@ -85,6 +85,10 @@
   width: 300px;
 }
 
+.auth-button {
+  margin: 5px;
+}
+
 /*** DASHBOARD END ***/
 
 /*** AUTH START ***/
