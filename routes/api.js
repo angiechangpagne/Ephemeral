@@ -3,7 +3,7 @@ var router = express.Router();
 
 const userController = require('../controllers/userController');
 
-router.post('/topics', userController.createUser, (req, res, next) => {
+router.post('/user/:id', userController.createUser, (req, res, next) => {
     console.log(`USER CREATED`)
     res.sendStatus(200)
 })

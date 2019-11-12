@@ -15,9 +15,13 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
+const ObjectIdSchema = Schema.ObjectId;
+const ObjectId = mongoose.Types.ObjectId;
+
 // user schema --> holds topics (categories) & saved articles for individual users
 
 const userSchema = new Schema({
+  _id: { type: ObjectIdSchema, default: function () { return new ObjectId() } },
   topics: [
     {
       type: String
