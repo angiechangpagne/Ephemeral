@@ -1,6 +1,7 @@
 const models = require('../Model/userModel');
 const mongoose = require('mongoose')
 require('dotenv').config();
+const fetch = require('node-fetch')
 const userController = {};
 // console.log(User)
 
@@ -36,8 +37,11 @@ userController.saveTopic = (req, res, next) => {
     models.User.findOne({ uid: id })
         .then(doc => {
             // console.log(`DOC: `, doc)
-            doc.topics = [...topics, topic]
+
+
+            doc.topics.push(topic)
             doc.save()
+            console.log(doc)
             return next()
         })
         .catch(err => {
@@ -50,7 +54,7 @@ userController.saveTopic = (req, res, next) => {
 userController.getTopicsAndFetch = (req, res, next) => {
     const { id } = req.params;
     // find user
-    models.User.findById({ uid: id })
+    models.User.findOne({ uid: id })
         .then((doc) => {
             // loop over doc.topics
             // fetch for each topic
@@ -68,6 +72,7 @@ userController.getTopicsAndFetch = (req, res, next) => {
                         }); // array of objects, one for each article , push just url and abstract into arr
 
                         res.locals.articleArr = arr; // sent this back to front end in api.js
+                        console.log(`article array `, res.locals.articleArr)
                         return next();
                     })
                     .catch(err => {
