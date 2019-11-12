@@ -4,18 +4,21 @@ import { Link } from 'react-router-dom';
 import superagent from 'superagent';
 import app from '../../base';
 
-const SignUp = ({ history }, ...props) => {
+const SignUp = ({ history }) => {
   const handleSignUp = useCallback(async event => {
 	event.preventDefault();
 	const { email, password } = event.target.elements;
 	try {
 	  await app
 	    .auth()
-		.createUserWithEmailAndPassword(email.value, password.value);
-	  superagent
-	  	.post(`http://localhost:5000/api/user/${props.user.uid}`)
-	    .then(res => console.log(res.body))
-	    .catch(err => console.log("Error saving user: ", err));
+		.createUserWithEmailAndPassword(email.value, password.value)
+		.then(res => {
+		  console.log('User: ', res.user);
+		  superagent
+			.post(`http://localhost:5000/api/user/${res.user.uid}`)
+			.then(res => console.log(res))
+			.catch(err => console.log("Error saving user: ", err));
+		});
 	  history.push('/');
 	} catch (error) {
 	  alert(error);
