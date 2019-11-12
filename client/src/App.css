@@ -74,6 +74,21 @@
   cursor: pointer;
 }
 
+.signout {
+  height: 50%;
+  width: 50%;
+  margin: auto;
+}
+
+.auth-modal{
+  height: 300px;
+  width: 300px;
+}
+
+.auth-button {
+  margin: 5px;
+}
+
 /*** DASHBOARD END ***/
 
 /*** AUTH START ***/
@@ -84,3 +99,14 @@
   align-items: center;
   justify-content: center;
 }
+
+/*** CAROUSEL START ***/
+.carousel-img {
+  max-height: 70vh;
+}
+
+.caption-title {
+}
+
+
+/*** CAROUSE END ***/

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import superagent from 'superagent';
+import app from '../../base';
 
 // View Components
 import TextInput from '../presentation/TextInput';
 import TopicList from '../presentation/TopicList';
+import { Carousel } from 'react-bootstrap';
 
-function Dashboard() {
+function Dashboard(props) {
 
   /*** State Variables ***/
   const [currentTopic, setTopic] = useState('');
@@ -14,15 +16,13 @@ function Dashboard() {
   /*** Lifecycle Actions ***/
     // componentDidMount //
   useEffect(getTopics, []);
-    
-    // componentWillUpdate //
 
 
   /*** Helper Functions ***/
   function getTopics() {
 	console.log('getting topics');
 	superagent
-	  .get('/api/test')
+	  .get(`http://localhost:5000/api/topics/${props.user.uid}`)
 	  .then(res => {
 		addTopic(res.body.topics);
 	  });
@@ -38,13 +38,52 @@ function Dashboard() {
 	e.preventDefault();
 	const topicList = [...topics, currentTopic];
 	addTopic(topicList);
+	superagent
+	  .post(`http://localhost:5000/api/topics/${props.user.uid}`)
+	  .send(currentTopic)
+	  .then(res => console.log(JSON.stringify(res.body)))
+	  .catch(err => console.log('Error saving topic: ', err));
   }
+
+  const newsArr = [
+	{ articleUrl: '',
+	  title: 'Fake News',
+	  abstract: 'First Slide',
+	  imgUrl: 'https://picsum.photos/800/400'
+	},
+	{ articleUrl: '',
+	  title: 'Florida man strikes back',
+	  abstract: 'Second Slide',
+	  imgUrl: 'https://media2.fdncms.com/orlando/imager/u/blog/26153482/asa.5da8af649db7b.jpg?cb=1571337540'
+	},
+	{ articleUrl: '',
+	  title: 'Old man yells at cloud',
+	  abstract: 'Third Slide',
+	  imgUrl: 'https://i0.kym-cdn.com/entries/icons/facebook/000/019/304/old.jpg'
+	}
+  ]
+
+  const newsreel = newsArr.map( (article, i) => (
+	<Carousel.Item key={i}>
+	  <img
+		className='d-block w-100 carousel-img'
+		src={article.imgUrl}
+		alt={article.alt}
+	  />
+	  <Carousel.Caption>
+		<h3 className='caption-title'>{article.title}</h3>
+		<p className='caption-abstract'>{article.abstract}</p>
+	  </Carousel.Caption>
+	</Carousel.Item>
+  ));
 
   return (
 	<div id='dashboard-container'>
 
 	  <div className='dashboard-header'>
-		Ephemeral
+		<Carousel>
+		  {newsreel}
+		</Carousel>
 	  </div>
 
 	  <div id='main-interface'>
@@ -55,6 +94,8 @@ function Dashboard() {
 		</div>
 
 		<TopicList topics={topics} />
+
+		<button className='btn btn-danger signout' onClick={() => app.auth().signOut()}>Sign Out</button>
 	  </div>
 
 	</div>
