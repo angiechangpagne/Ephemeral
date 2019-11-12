@@ -5,7 +5,8 @@ const userController = require('../controllers/userController');
 
 router.post('/user/:id', userController.createUser, (req, res, next) => {
     console.log(`USER CREATED`)
-    res.sendStatus(200)
+    res.status(200).json(
+        res.locals.user)
 })
 // // createUser --> get saved topics and fetch for each topic 
 router.get('/topics/:id', userController.getTopicsAndFetch, (req, res, next) => {

@@ -11,8 +11,8 @@ userController.createUser = (req, res, next) => {
     const { id } = req.params;
     if (id) return next();
 
-    let objId = new ObjectId(id);
-    models.User.create({ _id: objId },
+
+    models.User.create({ _id: new ObjectId(id) },
         function (err, doc) {
             if (err) {
                 console.log(err)
