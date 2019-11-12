@@ -16,8 +16,6 @@ function Dashboard(props) {
   /*** Lifecycle Actions ***/
     // componentDidMount //
   useEffect(getTopics, []);
-    
-    // componentWillUpdate //
 
 
   /*** Helper Functions ***/
