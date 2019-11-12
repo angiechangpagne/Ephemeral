@@ -4,38 +4,36 @@ require('dotenv').config();
 const userController = {};
 // console.log(User)
 
-const ObjectId = mongoose.Types.ObjectId;
+//const ObjectId = mongoose.Types.ObjectId;
 
 
 userController.createUser = (req, res, next) => {
     const { id } = req.params;
-    if (id) return next();
-    models.User.create({ _id: new ObjectId(id) },
+    // if (id) return next();
+    console.log(`id in createUser: `, id)
+    models.User.create({ uid: id },
         function (err, doc) {
             if (err) {
-                console.log(err)
+                console.log(`err here`, err)
                 return next(err)
             } else {
                 console.log(doc)
                 res.locals.user = doc;
                 console.log(`saved`)
+                return next();
             }
 
         }
     )
-    return next();
+
 }
 // save topics to DB after login
 userController.saveTopic = (req, res, next) => {
     const { topic } = req.body;
     const { id } = req.params;
 
-    //console.log(`Inside saveTopics ||| id: `, id, ' topic: ', topic)
 
-    //const id = '5dc9de9f1c9d440000ee7598'; // for testing purposes
-    let objId = new ObjectId(id);
-    console.log(`objId: `, objId)
-    models.User.findOne({ _id: objId })
+    models.User.findOne({ uid: id })
         .then(doc => {
             // console.log(`DOC: `, doc)
             doc.topics = [...topics, topic]
@@ -43,19 +41,16 @@ userController.saveTopic = (req, res, next) => {
             return next()
         })
         .catch(err => {
-            //console.log(err)
+            console.log(err)
             return next(err)
         })
-
-
-    return next();
 
 }
 
 userController.getTopicsAndFetch = (req, res, next) => {
     const { id } = req.params;
     // find user
-    models.User.findById(id)
+    models.User.findById({ uid: id })
         .then((doc) => {
             // loop over doc.topics
             // fetch for each topic
@@ -73,7 +68,7 @@ userController.getTopicsAndFetch = (req, res, next) => {
                         }); // array of objects, one for each article , push just url and abstract into arr
 
                         res.locals.articleArr = arr; // sent this back to front end in api.js
-
+                        return next();
                     })
                     .catch(err => {
                         console.log('err here in catch in GET/Fetch')
@@ -84,6 +79,7 @@ userController.getTopicsAndFetch = (req, res, next) => {
             return next();
         })
         .catch(err => {
+            console.log(`err in get/fetch2`)
             return next(err);
         })
 }

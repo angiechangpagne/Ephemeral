@@ -21,7 +21,8 @@ const ObjectId = mongoose.Types.ObjectId;
 // user schema --> holds topics (categories) & saved articles for individual users
 
 const userSchema = new Schema({
-  _id: { type: ObjectIdSchema, default: function () { return new ObjectId() } },
+  //_id: { type: ObjectIdSchema, default: function () { return new ObjectId() } },
+  uid: String,
   topics: [
     {
       type: String
