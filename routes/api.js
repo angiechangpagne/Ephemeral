@@ -13,7 +13,7 @@ router.get('/topics/:id', userController.getTopicsAndFetch, (req, res, next) => 
     console.log(`SENT BACK A RESPONSE WITH API DATA`)
     // send article url/abstract to front end
     res.status(200).json({
-        data: [...res.locals.articleArr]
+        data: res.locals.articleArr
     })
 
 })
