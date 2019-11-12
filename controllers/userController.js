@@ -10,8 +10,6 @@ const ObjectId = mongoose.Types.ObjectId;
 userController.createUser = (req, res, next) => {
     const { id } = req.params;
     if (id) return next();
-
-
     models.User.create({ _id: new ObjectId(id) },
         function (err, doc) {
             if (err) {
@@ -19,6 +17,7 @@ userController.createUser = (req, res, next) => {
                 return next(err)
             } else {
                 console.log(doc)
+                res.locals.user = doc;
                 console.log(`saved`)
             }
 

@@ -4,7 +4,7 @@ var router = express.Router();
 const userController = require('../controllers/userController');
 
 router.post('/user/:id', userController.createUser, (req, res, next) => {
-    console.log(`USER CREATED`)
+    //console.log(`USER CREATED`)
     res.status(200).json(
         res.locals.user)
 })
